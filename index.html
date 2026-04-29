@@ -163,15 +163,23 @@ function load(){
 }
 
 // ADMIN LOGIN
-function login(){
-  let u=document.getElementById("user").value;
-  let p=document.getElementById("pass").value;
+function openAdmin(){
+  document.getElementById("adminBox").classList.toggle("hidden");
+}
 
-  if(u==="jinxzen" && p==="2222"){
-    document.getElementById("adminPanel").classList.remove("hidden");
-    loadAdmin();
+function loginAdmin(){
+  let user = document.getElementById("adminUser").value;
+  let pass = document.getElementById("adminPass").value;
+
+  if(user === "jinxzen" && pass === "2222"){
+    alert("Welcome Admin");
+
+    document.getElementById("adminBox").innerHTML =
+    "<h3>Admin Dashboard</h3><p>Access Granted</p>";
+
+    loadAdminData(); // if you have admin functions
   } else {
-    alert("Wrong login");
+    alert("Wrong credentials");
   }
 }
 
