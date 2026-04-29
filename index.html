@@ -97,6 +97,68 @@ function submitPayment() {
     "⏳ Payment Pending. Send screenshot to WhatsApp: 0704956915";
 }
 </script>
+<script>
+let selectedProduct = "";
 
+// Store payments temporarily
+let payments = [];
+
+function selectProduct(product) {
+  selectedProduct = product;
+  document.getElementById("paymentSection").style.display = "block";
+}
+
+// Load saved payments
+function loadPayments() {
+  let data = localStorage.getItem("payments");
+
+  if (data) {
+    payments = JSON.parse(data);
+
+    let list = document.getElementById("paymentList");
+    list.innerHTML = "";
+
+    payments.forEach(p => {
+      let item = document.createElement("li");
+      item.innerHTML = p.product + " - " + p.phone + " (" + p.status + ")";
+      list.appendChild(item);
+    });
+  }
+}
+
+// Submit payment
+function submitPayment() {
+  let phone = document.getElementById("phone").value;
+
+  if (!phone) {
+    alert("Enter phone number");
+    return;
+  }
+
+  let payment = {
+    product: selectedProduct,
+    phone: phone,
+    status: "Pending"
+  };
+
+  payments.push(payment);
+  localStorage.setItem("payments", JSON.stringify(payments));
+
+  // WhatsApp message
+  let message = "Hello, I have paid for " + selectedProduct + ". My number is " + phone;
+  let whatsapp = "https://wa.me/254704956915?text=" + encodeURIComponent(message);
+
+  window.open(whatsapp, "_blank");
+
+  document.getElementById("status").innerHTML =
+    "⏳ Payment Pending... Waiting for admin approval";
+
+  document.getElementById("phone").value = "";
+
+  loadPayments(); // refresh list
+}
+
+window.onload = loadPayments;
+           </script>
 </body>
   </html>
