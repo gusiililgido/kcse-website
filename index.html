@@ -11,154 +11,181 @@
     }
     .card {
       background: #1e293b;
-      margin: 20px;
+      margin: 15px;
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 12px;
     }
     button {
       background: #22c55e;
       border: none;
       padding: 10px;
+      margin: 5px;
       color: white;
       cursor: pointer;
+      border-radius: 6px;
     }
     input {
       padding: 10px;
-      margin: 10px;
+      margin: 5px;
       width: 80%;
     }
+    .hidden { display:none; }
+    .admin { background:#111827; padding:20px; margin-top:20px;}
   </style>
 </head>
 
 <body>
 
 <h1>KCSE 2026 RESOURCES 📚</h1>
+<p>Get Predictions, Notes & Past Papers Instantly 🚀</p>
 
-<p>Add your GPT viral content here 🚀</p>
-
+<!-- PRODUCTS -->
 <div class="card">
   <h3>KCSE 2026 Prediction</h3>
   <p>50/=</p>
-  <button onclick="selectProduct('Prediction - 50/=')">Buy</button>
+  <button onclick="buy('Prediction - 50/=')">Buy</button>
 </div>
 
 <div class="card">
   <h3>Setbook Notes & Essays</h3>
   <p>30/=</p>
-  <button onclick="selectProduct('Setbook - 30/=')">Buy</button>
+  <button onclick="buy('Setbook - 30/=')">Buy</button>
 </div>
 
 <div class="card">
   <h3>Past Papers</h3>
   <p>25/=</p>
-  <button onclick="selectProduct('Past Papers - 25/=')">Buy</button>
+  <button onclick="buy('Past Papers - 25/=')">Buy</button>
 </div>
 
 <div class="card">
   <h3>Any Subject Notes</h3>
   <p>50/=</p>
-  <button onclick="selectProduct('Notes - 50/=')">Buy</button>
+  <button onclick="buy('Notes - 50/=')">Buy</button>
 </div>
 
-<div id="paymentSection" style="display:none;">
+<!-- PAYMENT -->
+<div id="pay" class="hidden">
   <h2>Manual Payment</h2>
+  <p>Send to: <b>0754346922</b><br>Name: Cyprian</p>
 
-  <p>Send money to:<br>
-  <b>0754346922</b><br>
-  Name: Cyprian</p>
-
-  <p>After payment upload screenshot:</p>
-
-  <input type="text" id="phone" placeholder="Your Phone Number"><br>
-  <input type="file" id="screenshot"><br>
-
-  <button onclick="submitPayment()">Submit Payment</button>
+  <input type="text" id="phone" placeholder="Your Phone Number">
+  <button onclick="submit()">Submit Payment</button>
 
   <p id="status"></p>
+
+  <h3>Your Requests</h3>
+  <ul id="list"></ul>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="card">
+  <h3>Admin Panel</h3>
+  <input type="text" id="user" placeholder="Username">
+  <input type="password" id="pass" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="adminPanel" class="admin hidden">
+  <h2>Admin Dashboard</h2>
+  <ul id="adminList"></ul>
 </div>
 
 <script>
-let selectedProduct = "";
+let selected = "";
+let payments = JSON.parse(localStorage.getItem("payments")) || [];
 
-function selectProduct(product) {
-  selectedProduct = product;
-  document.getElementById("paymentSection").style.display = "block";
+function buy(product){
+  selected = product;
+  document.getElementById("pay").classList.remove("hidden");
 }
 
-function submitPayment() {
+// USER SUBMIT
+function submit(){
   let phone = document.getElementById("phone").value;
+  if(!phone) return alert("Enter phone");
 
-  if (!phone) {
-    alert("Enter phone number");
-    return;
-  }
-
-  document.getElementById("status").innerHTML =
-    "⏳ Payment Pending. Send screenshot to WhatsApp: 0704956915";
-}
-</script>
-<script>
-let selectedProduct = "";
-
-// Store payments temporarily
-let payments = [];
-
-function selectProduct(product) {
-  selectedProduct = product;
-  document.getElementById("paymentSection").style.display = "block";
-}
-
-// Load saved payments
-function loadPayments() {
-  let data = localStorage.getItem("payments");
-
-  if (data) {
-    payments = JSON.parse(data);
-
-    let list = document.getElementById("paymentList");
-    list.innerHTML = "";
-
-    payments.forEach(p => {
-      let item = document.createElement("li");
-      item.innerHTML = p.product + " - " + p.phone + " (" + p.status + ")";
-      list.appendChild(item);
-    });
-  }
-}
-
-// Submit payment
-function submitPayment() {
-  let phone = document.getElementById("phone").value;
-
-  if (!phone) {
-    alert("Enter phone number");
-    return;
-  }
-
-  let payment = {
-    product: selectedProduct,
-    phone: phone,
-    status: "Pending"
+  let data = {
+    product:selected,
+    phone:phone,
+    status:"Pending",
+    link:"https://your-download-link.com"
   };
 
-  payments.push(payment);
+  payments.push(data);
   localStorage.setItem("payments", JSON.stringify(payments));
 
-  // WhatsApp message
-  let message = "Hello, I have paid for " + selectedProduct + ". My number is " + phone;
-  let whatsapp = "https://wa.me/254704956915?text=" + encodeURIComponent(message);
+  // WhatsApp
+  let msg = "Hello, I have paid for " + selected + ". My number: " + phone;
+  window.open("https://wa.me/254704956915?text="+encodeURIComponent(msg));
 
-  window.open(whatsapp, "_blank");
+  document.getElementById("status").innerHTML="⏳ Pending approval...";
+  document.getElementById("phone").value="";
 
-  document.getElementById("status").innerHTML =
-    "⏳ Payment Pending... Waiting for admin approval";
-
-  document.getElementById("phone").value = "";
-
-  loadPayments(); // refresh list
+  load();
 }
 
-window.onload = loadPayments;
-           </script>
+// LOAD USER LIST
+function load(){
+  let list = document.getElementById("list");
+  list.innerHTML="";
+
+  payments.forEach(p=>{
+    let li=document.createElement("li");
+
+    if(p.status==="Approved"){
+      li.innerHTML = p.product+" - "+p.status+
+      " ✅ <a href='"+p.link+"' target='_blank'>Download</a>";
+    } else {
+      li.innerHTML = p.product+" - "+p.status+" ⏳";
+    }
+
+    list.appendChild(li);
+  });
+}
+
+// ADMIN LOGIN
+function login(){
+  let u=document.getElementById("user").value;
+  let p=document.getElementById("pass").value;
+
+  if(u==="jinxzen" && p==="2222"){
+    document.getElementById("adminPanel").classList.remove("hidden");
+    loadAdmin();
+  } else {
+    alert("Wrong login");
+  }
+}
+
+// ADMIN LIST
+function loadAdmin(){
+  let list=document.getElementById("adminList");
+  list.innerHTML="";
+
+  payments.forEach((p,i)=>{
+    let li=document.createElement("li");
+
+    li.innerHTML = p.product+" - "+p.phone+" ("+p.status+")";
+
+    if(p.status==="Pending"){
+      let btn=document.createElement("button");
+      btn.innerText="Approve";
+      btn.onclick=function(){
+        payments[i].status="Approved";
+        localStorage.setItem("payments", JSON.stringify(payments));
+        loadAdmin();
+        load();
+      };
+      li.appendChild(btn);
+    }
+
+    list.appendChild(li);
+  });
+}
+
+window.onload=load;
+</script>
+
 </body>
-  </html>
+</html>
