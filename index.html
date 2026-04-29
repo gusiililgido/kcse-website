@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KCSE 2026 Resources</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+    .card {
+      background: #1e293b;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      padding: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>KCSE 2026 RESOURCES 📚</h1>
+
+<p>Add your GPT viral content here 🚀</p>
+
+<div class="card">
+  <h3>KCSE 2026 Prediction</h3>
+  <p>50/=</p>
+  <button onclick="selectProduct('Prediction - 50/=')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>Setbook Notes & Essays</h3>
+  <p>30/=</p>
+  <button onclick="selectProduct('Setbook - 30/=')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>Past Papers</h3>
+  <p>25/=</p>
+  <button onclick="selectProduct('Past Papers - 25/=')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>Any Subject Notes</h3>
+  <p>50/=</p>
+  <button onclick="selectProduct('Notes - 50/=')">Buy</button>
+</div>
+
+<div id="paymentSection" style="display:none;">
+  <h2>Manual Payment</h2>
+
+  <p>Send money to:<br>
+  <b>0754346922</b><br>
+  Name: Cyprian</p>
+
+  <p>After payment upload screenshot:</p>
+
+  <input type="text" id="phone" placeholder="Your Phone Number"><br>
+  <input type="file" id="screenshot"><br>
+
+  <button onclick="submitPayment()">Submit Payment</button>
+
+  <p id="status"></p>
+</div>
+
+<script>
+let selectedProduct = "";
+
+function selectProduct(product) {
+  selectedProduct = product;
+  document.getElementById("paymentSection").style.display = "block";
+}
+
+function submitPayment() {
+  let phone = document.getElementById("phone").value;
+
+  if (!phone) {
+    alert("Enter phone number");
+    return;
+  }
+
+  document.getElementById("status").innerHTML =
+    "⏳ Payment Pending. Send screenshot to WhatsApp: 0704956915";
+}
+</script>
+
+</body>
+  </html>
