@@ -94,11 +94,13 @@ input {
 </div>
 
 <!-- ADMIN LOGIN -->
-<div class="card">
-  <h3>Admin Panel</h3>
-  <input type="text" id="user" placeholder="Username">
-  <input type="password" id="pass" placeholder="Password">
-  <button onclick="login()">Login</button>
+<div id="adminBox" class="hidden" style="position:fixed; top:20%; left:10%; right:10%; background:#111827; padding:20px; border-radius:10px;">
+  <h3>Admin Login</h3>
+
+  <input type="text" id="adminUser" placeholder="Username"><br>
+  <input type="password" id="adminPass" placeholder="Password"><br>
+
+  <button onclick="loginAdmin()">Login</button>
 </div>
 
 <!-- ADMIN DASHBOARD -->
