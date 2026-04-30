@@ -194,18 +194,7 @@ function approve(){
     document.getElementById("downloadBox").classList.remove("hidden");
 }
 
-</script>const names = ["Brian", "Faith", "Kevin", "Mercy", "James", "Sheila"];
-const items = ["Predictions", "Notes", "Past Papers"];
+</script>
 
-setInterval(() => {
-    let name = names[Math.floor(Math.random()*names.length)];
-    let item = items[Math.floor(Math.random()*items.length)];
-
-    let popup = document.getElementById("popup");
-    popup.innerHTML = `🔥 ${name} just purchased ${item}`;
-    popup.classList.remove("hidden");
-
-    setTimeout(() => popup.classList.add("hidden"), 4000);
-}, 7000);
 </body>
 </html>
