@@ -78,16 +78,13 @@ z-index:999;
 
 <header>
 KCSE 2026 PREDICTIONS MATERIALS
-
-function updateOnline(){
-    let count = Math.floor(Math.random() * 50) + 120; // fake users
-    document.getElementById("onlineCount").innerText = count;
-}
-
-setInterval(updateOnline, 3000);
-updateOnline();
-
 </header>
+
+<div style="text-align:center;margin-top:10px;">
+    <span style="color:#22c55e;font-size:20px;">●</span>
+    <span style="color:white;"> Live Users Online</span>
+    <span id="onlineCount" style="color:orange;"></span>
+</div>
 
 <div class="container">
 
