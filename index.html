@@ -1,221 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCSE 2026 Resources</title>
-  <style>
+<title>KCSE 2026 Predictions Materials</title>
+
+<style>
 body {
-  font-family: Arial;
-  background: linear-gradient(135deg, #020617, #0f172a);
-  color: white;
-  margin: 0;
-  padding: 10px;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-  font-size: 22px;
+header {
+    background: linear-gradient(90deg,#2563eb,#000);
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.container {
+    padding: 20px;
 }
 
 .card {
-  background: #1e293b;
-  margin: 12px 0;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    background: #1e293b;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
 }
 
 button {
-  background: #22c55e;
-  border: none;
-  padding: 10px;
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
-  width: 100%;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #2563eb;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
-input {
-  padding: 10px;
-  margin: 5px 0;
-  width: 100%;
-  border-radius: 6px;
-  border: none;
+button:hover {
+    background: #1d4ed8;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
-  </style>
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+}
+</style>
+
 </head>
 
 <body>
 
-<h1>KCSE 2026 RESOURCES 📚</h1>
-<p>Get Predictions, Notes & Past Papers Instantly 🚀</p>
+<header>
+KCSE 2026 PREDICTIONS MATERIALS
+</header>
 
-<!-- PRODUCTS -->
-<div class="card">
-  <h3>KCSE 2026 Prediction</h3>
-  <p>50/=</p>
-  <button onclick="buy('Prediction - 50/=')">Buy</button>
-</div>
+<div class="container">
 
 <div class="card">
-  <h3>Setbook Notes & Essays</h3>
-  <p>30/=</p>
-  <button onclick="buy('Setbook - 30/=')">Buy</button>
+<h3>📌 ACCESS:</h3>
+<p>✔ KCSE Predictions Papers</p>
+<p>✔ All Notes</p>
+<p>✔ Past Papers with Answers</p>
+<p>✔ Setbook Guides</p>
 </div>
 
 <div class="card">
-  <h3>Past Papers</h3>
-  <p>25/=</p>
-  <button onclick="buy('Past Papers - 25/=')">Buy</button>
+<h3>💰 Choose Package</h3>
+
+<button onclick="buy('KCSE Predictions','50')">KCSE 2026 Predictions - 50/=</button>
+<button onclick="buy('Setbook Notes','30')">Setbook Notes & Essays - 30/=</button>
+<button onclick="buy('Past Papers','25')">KCSE Past Papers - 25/=</button>
+<button onclick="buy('Subject Notes','50')">Any Subject Notes - 50/=</button>
+
 </div>
 
-<div class="card">
-  <h3>Any Subject Notes</h3>
-  <p>50/=</p>
-  <button onclick="buy('Notes - 50/=')">Buy</button>
+<div class="card hidden" id="paymentBox">
+<h3>📲 Payment Instructions</h3>
+<p>Go to M-PESA → Send Money</p>
+<p>Number: <b>0704956915</b></p>
+<p>Amount: <span id="amount"></span></p>
+
+<input type="text" id="phone" placeholder="Enter your phone number" style="width:100%;padding:10px;margin-top:10px;">
+
+<button onclick="confirmPayment()">I HAVE PAID</button>
 </div>
 
-<!-- PAYMENT -->
-<div id="pay" class="hidden">
-  <h2>Manual Payment</h2>
-  <p>Send to: <b>0754346922</b><br>Name: Cyprian</p>
-
-  <input type="text" id="phone" placeholder="Your Phone Number">
-  <button onclick="submit()">Submit Payment</button>
-
-  <p id="status"></p>
-
-  <h3>Your Requests</h3>
-  <ul id="list"></ul>
+<div class="card hidden" id="pendingBox">
+<h3>⏳ Payment Pending</h3>
+<p>Wait for admin approval...</p>
 </div>
 
-<!-- ADMIN LOGIN -->
-<div id="adminBox" class="hidden" style="position:fixed; top:20%; left:10%; right:10%; background:#111827; padding:20px; border-radius:10px;">
-  <h3>Admin Login</h3>
-
-  <input type="text" id="adminUser" placeholder="Username"><br>
-  <input type="password" id="adminPass" placeholder="Password"><br>
-
-  <button onclick="loginAdmin()">Login</button>
+<div class="card hidden" id="downloadBox">
+<h3>✅ Approved</h3>
+<a href="https://teacher.co.ke" target="_blank">
+<button>DOWNLOAD NOW</button>
+</a>
 </div>
 
-<!-- ADMIN DASHBOARD -->
-<div id="adminPanel" style="display:none; background:#111827; padding:15px; margin-top:20px; border-radius:10px;">
-  <h2>Admin Dashboard</h2>
+<div class="card hidden" id="adminLogin">
+<h3>🔒 Admin Login</h3>
+<input type="text" id="user" placeholder="Username" style="width:100%;padding:10px;">
+<input type="password" id="pass" placeholder="Password" style="width:100%;padding:10px;margin-top:10px;">
+<button onclick="login()">Login</button>
+</div>
 
-  <ul id="adminList"></ul>
+<div class="card hidden" id="adminPanel">
+<h3>📊 Admin Dashboard</h3>
+<p>Approve user manually</p>
+<button onclick="approve()">Approve Payment</button>
+</div>
+
+<div class="footer">
+<p>Powered by Engineer Gido</p>
+
+<a href="https://t.me/knec_director_examiners" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="40">
+</a>
+
+</div>
+
 </div>
 
 <script>
-let selected = "";
-let payments = JSON.parse(localStorage.getItem("payments")) || [];
 
-function buy(product){
-  selected = product;
-  document.getElementById("pay").classList.remove("hidden");
+let selectedItem = "";
+let selectedAmount = "";
+
+function buy(item, amount){
+    selectedItem = item;
+    selectedAmount = amount;
+    document.getElementById("amount").innerText = amount + "/=";
+    document.getElementById("paymentBox").classList.remove("hidden");
 }
 
-// USER SUBMIT
-function submit(){
-  let phone = document.getElementById("phone").value;
-  if(!phone) return alert("Enter phone");
+function confirmPayment(){
+    let phone = document.getElementById("phone").value;
 
-  let data = {
-    product:selected,
-    phone:phone,
-    status:"Pending",
-    link:"https://your-download-link.com"
-  };
+    if(phone === ""){
+        alert("Enter phone number");
+        return;
+    }
 
-  payments.push(data);
-  localStorage.setItem("payments", JSON.stringify(payments));
+    // WhatsApp auto message
+    let message = `Hello Admin%0A%0AI have paid for: ${selectedItem}%0AAmount: ${selectedAmount}/=%0APhone: ${phone}%0A(Attaching screenshot)`;
 
-  // WhatsApp
-  let msg = "Hello, I have paid for " + selected + ". My number: " + phone;
-  window.open("https://wa.me/254704956915?text="+encodeURIComponent(msg));
+    window.open(`https://wa.me/254704956915?text=${message}`);
 
-  document.getElementById("status").innerHTML="⏳ Pending approval...";
-  document.getElementById("phone").value="";
-
-  load();
+    document.getElementById("paymentBox").classList.add("hidden");
+    document.getElementById("pendingBox").classList.remove("hidden");
 }
 
-// LOAD USER LIST
-function load(){
-  let list = document.getElementById("list");
-  list.innerHTML="";
+// Admin
+function showAdmin(){
+    document.getElementById("adminLogin").classList.remove("hidden");
+}
 
-  payments.forEach(p=>{
-    let li=document.createElement("li");
+// secret trigger (tap title 5 times)
+let taps = 0;
+document.querySelector("header").addEventListener("click", () => {
+    taps++;
+    if(taps === 5){
+        showAdmin();
+    }
+});
 
-    if(p.status==="Approved"){
-      li.innerHTML = p.product+" - "+p.status+
-      " ✅ <a href='"+p.link+"' target='_blank'>Download</a>";
+function login(){
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+
+    if(u === "jinxzen" && p === "2222"){
+        document.getElementById("adminPanel").classList.remove("hidden");
+        alert("Welcome Admin");
     } else {
-      li.innerHTML = p.product+" - "+p.status+" ⏳";
+        alert("Wrong login");
     }
-
-    list.appendChild(li);
-  });
 }
 
-// ADMIN LOGIN
-function openAdmin(){
-  document.getElementById("adminBox").classList.toggle("hidden");
+function approve(){
+    document.getElementById("pendingBox").classList.add("hidden");
+    document.getElementById("downloadBox").classList.remove("hidden");
 }
 
-function loginAdmin(){
-  let user = document.getElementById("adminUser").value;
-  let pass = document.getElementById("adminPass").value;
-
-  if(user === "jinxzen" && pass === "2222"){
-    
-    alert("Welcome Admin");
-
-    // SHOW ADMIN PANEL
-    document.getElementById("adminPanel").style.display = "block";
-
-    // OPTIONAL: hide login box
-    document.getElementById("adminBox").style.display = "none";
-
-    loadAdminData();
-
-  } else {
-    alert("Wrong credentials");
-  }
-}
-
-// ADMIN LIST
-function loadAdmin(){
-  let list=document.getElementById("adminList");
-  list.innerHTML="";
-
-  payments.forEach((p,i)=>{
-    let li=document.createElement("li");
-
-    li.innerHTML = p.product+" - "+p.phone+" ("+p.status+")";
-
-    if(p.status==="Pending"){
-      let btn=document.createElement("button");
-      btn.innerText="Approve";
-      btn.onclick=function(){
-        payments[i].status="Approved";
-        localStorage.setItem("payments", JSON.stringify(payments));
-        loadAdmin();
-        load();
-      };
-      li.appendChild(btn);
-    }
-
-    list.appendChild(li);
-  });
-}
-
-window.onload=load;
 </script>
 
 </body>
