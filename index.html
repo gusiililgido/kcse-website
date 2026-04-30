@@ -227,6 +227,14 @@ setInterval(() => {
     setTimeout(() => popup.classList.add("hidden"), 4000);
 }, 7000);
 
+function updateOnline(){
+    let count = Math.floor(Math.random() * 50) + 120; // fake users
+    document.getElementById("onlineCount").innerText = count;
+}
+
+setInterval(updateOnline, 3000);
+updateOnline();
+
 </script>
 
 </body>
